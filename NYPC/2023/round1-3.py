@@ -1,14 +1,10 @@
 def min_operations(X, K):
-    dp = [float('inf')] * (2 ** K)
-    dp[X] = 0
-
-    for i in range(X, 0, -1):
-        next_i = (i + 1) % (2 ** K)
-        double_i = (i * 2) % (2 ** K)
-        
-        dp[i] = min(dp[i], dp[next_i] + 1, dp[double_i] + 1)
-
-    return dp[X]
+    dp = [0] * (2 ** K)  # dp 배열 크기를 2^K로 수정
+    for i in range(1, 2 ** K):
+        option1 = (X + 1) % i
+        option2 = (X * 2) % i
+        dp[i] = min(dp[option1] + 1, dp[option2] + 1)
+    return dp[2 ** K - 1]  # 결과는 dp[2^K - 1]에 저장됨
 
 # 입력 받기
 K = int(input())
